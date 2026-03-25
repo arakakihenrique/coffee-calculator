@@ -436,6 +436,81 @@ main {
   padding: 3px 8px;
 }
 
+/* Balance selector */
+.timer-balance-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.timer-balance-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #5a3e2b;
+  white-space: nowrap;
+}
+
+.timer-balance-select {
+  font-size: 0.8125rem;
+  font-family: inherit;
+  color: #1c0f07;
+  background: #faf6f1;
+  border: 1.5px solid #d6b896;
+  border-radius: 8px;
+  padding: 4px 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+.timer-balance-select:focus {
+  border-color: #c17b3e;
+}
+
+/* Tabs */
+.timer-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  background: #f0e6d8;
+  border-radius: 10px;
+  padding: 3px;
+}
+
+.timer-tab {
+  flex: 1;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 6px 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #9c7a5a;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.timer-tab.active {
+  background: #fff;
+  color: #1c0f07;
+  box-shadow: 0 1px 4px rgba(44, 24, 8, 0.1);
+}
+
+/* Chart tab */
+.timer-chart-tab {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 4px;
+}
+
+.stages-chart-svg {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+}
+
 /* Progress bar */
 .timer-progress-bar {
   height: 6px;
