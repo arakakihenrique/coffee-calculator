@@ -121,6 +121,12 @@ You can start, pause, resume, and reset the timer. The progress bar highlights t
 
 ---
 
+## Inspiration
+
+Inspired by the [Coffee Bros Coffee-to-Water Ratio Calculator](https://coffeebros.com/pages/coffee-to-water-ratio-calculator).
+
+---
+
 ## License
 
 MIT
