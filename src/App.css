@@ -1,0 +1,724 @@
+/* ─── App Shell ──────────────────────────────────────────────────────────────── */
+
+.app {
+  min-height: 100vh;
+  background-color: #ede5da;
+  background-image:
+    radial-gradient(ellipse at 15% 25%, rgba(139, 80, 30, 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(100, 55, 15, 0.08) 0%, transparent 55%);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────────── */
+
+.app-header {
+  background: linear-gradient(150deg, #180c04 0%, #2a1508 55%, #3a1f0c 100%);
+  padding: 52px 24px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Language toggle */
+.lang-toggle {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  display: flex;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+  z-index: 2;
+}
+
+.lang-btn {
+  padding: 4px 11px;
+  border-radius: 6px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(245, 237, 227, 0.45);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lang-btn:hover {
+  color: rgba(245, 237, 227, 0.8);
+}
+
+.lang-btn.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #f5ede3;
+}
+
+.app-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 25% 60%, rgba(193, 123, 62, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 40%, rgba(193, 123, 62, 0.12) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.header-icon {
+  font-size: 2.75rem;
+  display: block;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.app-header h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: 2.625rem;
+  font-weight: 700;
+  color: #f5ede3;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.app-header p {
+  font-size: 0.9375rem;
+  color: rgba(245, 237, 227, 0.55);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Main content ───────────────────────────────────────────────────────────── */
+
+main {
+  flex: 1;
+  padding: 44px 20px 72px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* ─── Layout wrapper ─────────────────────────────────────────────────────────── */
+
+.calculator-wrapper {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 900px;
+}
+
+@media (max-width: 700px) {
+  .calculator-wrapper {
+    flex-direction: column;
+    gap: 18px;
+    max-width: 480px;
+  }
+}
+
+/* ─── Calculator Card ────────────────────────────────────────────────────────── */
+
+.calculator-card {
+  flex: 0 0 360px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow:
+    0 1px 2px rgba(28, 15, 7, 0.06),
+    0 4px 14px rgba(28, 15, 7, 0.08),
+    0 16px 48px rgba(28, 15, 7, 0.07);
+  padding: 28px 26px 24px;
+}
+
+@media (max-width: 700px) {
+  .calculator-card {
+    flex: none;
+    width: 100%;
+  }
+}
+
+.card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #1c0f07;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Select Input ───────────────────────────────────────────────────────────── */
+
+.select-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.select-input:last-child {
+  margin-bottom: 0;
+}
+
+.select-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #8c5e38;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.select-control {
+  width: 100%;
+  padding: 10px 36px 10px 13px;
+  font-size: 0.9375rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1c0f07;
+  background-color: #fdfaf7;
+  border: 1.5px solid #ddd0c0;
+  border-radius: 10px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23a07040' stroke-width='1.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 13px center;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+}
+
+.select-control:hover:not(:disabled) {
+  border-color: #c17b3e;
+  background-color: #ffffff;
+}
+
+.select-control:focus {
+  outline: none;
+  border-color: #c17b3e;
+  box-shadow: 0 0 0 3px rgba(193, 123, 62, 0.18);
+  background-color: #ffffff;
+}
+
+.select-control:disabled {
+  background-color: #f6f1ec;
+  border-color: #e8ddd2;
+  color: #c4a98a;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* ─── Result panel (right side) ──────────────────────────────────────────────── */
+
+.brew-result-wrapper {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Placeholder — shown when no result yet */
+.result-placeholder {
+  width: 100%;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(28, 15, 7, 0.04);
+  border: 2px dashed rgba(193, 123, 62, 0.3);
+  border-radius: 20px;
+  color: #b09070;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.placeholder-icon {
+  font-size: 2.5rem;
+  opacity: 0.45;
+}
+
+.result-placeholder p {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+/* ─── Brew Result Card ───────────────────────────────────────────────────────── */
+
+.brew-result-card {
+  background: linear-gradient(155deg, #1e0e05 0%, #2c1809 60%, #3a2210 100%);
+  border-radius: 20px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.18),
+    0 6px 20px rgba(0, 0, 0, 0.22),
+    0 16px 48px rgba(0, 0, 0, 0.16);
+  padding: 28px;
+  color: #f5ede3;
+  position: relative;
+  overflow: hidden;
+}
+
+.brew-result-card::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(193, 123, 62, 0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.brew-result-card::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -40px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(139, 80, 30, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Result header */
+.result-header {
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(245, 237, 227, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.result-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(240, 200, 126, 0.7);
+  margin-bottom: 6px;
+}
+
+.result-method-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: #f5ede3;
+  line-height: 1.15;
+  margin-bottom: 5px;
+}
+
+.result-subtitle {
+  font-size: 0.8125rem;
+  color: rgba(245, 237, 227, 0.45);
+  letter-spacing: 0.01em;
+}
+
+/* Key stats grid */
+.result-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(245, 237, 227, 0.08);
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-block {
+  padding: 16px 10px 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  border-right: 1px solid rgba(245, 237, 227, 0.08);
+}
+
+.stat-block:last-child {
+  border-right: none;
+}
+
+.stat-emoji {
+  font-size: 1.2rem;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #f0c87e;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.625rem;
+  color: rgba(245, 237, 227, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 1px;
+}
+
+/* Detail rows */
+.result-details {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(245, 237, 227, 0.07);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.detail-label {
+  font-size: 0.8125rem;
+  color: rgba(245, 237, 227, 0.45);
+  white-space: nowrap;
+}
+
+.detail-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(245, 237, 227, 0.88);
+  text-align: right;
+}
+
+/* ─── Pour Over Timer Card ───────────────────────────────────────────────────── */
+
+.pour-timer-card {
+  margin-top: 16px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow:
+    0 1px 2px rgba(28, 15, 7, 0.06),
+    0 4px 14px rgba(28, 15, 7, 0.08),
+    0 16px 48px rgba(28, 15, 7, 0.07);
+  padding: 22px 24px 24px;
+  overflow: hidden;
+}
+
+.timer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.timer-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #1c0f07;
+}
+
+.timer-method-tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #c17b3e;
+  background: rgba(193, 123, 62, 0.12);
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+
+/* Progress bar */
+.timer-progress-bar {
+  height: 6px;
+  background: #f0e8de;
+  border-radius: 99px;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.timer-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #c17b3e, #e09040);
+  border-radius: 99px;
+  transition: width 1s linear;
+}
+
+/* Step markers on the bar */
+.progress-step {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.progress-step-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e8ddd2;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px #ddd0c0;
+  transition: background 0.3s, box-shadow 0.3s;
+  flex-shrink: 0;
+}
+
+.progress-step-dot.end {
+  width: 10px;
+  height: 10px;
+}
+
+.progress-step.done .progress-step-dot {
+  background: #e09040;
+  box-shadow: 0 0 0 1px #c17b3e;
+}
+
+.progress-step.active .progress-step-dot {
+  background: #c17b3e;
+  box-shadow: 0 0 0 3px rgba(193, 123, 62, 0.25);
+}
+
+.progress-step-label {
+  position: absolute;
+  top: 11px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #b09070;
+  line-height: 1;
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+
+.progress-step.done .progress-step-label {
+  color: #c17b3e;
+}
+
+.progress-step.active .progress-step-label {
+  color: #1c0f07;
+}
+
+/* Clock + instruction row */
+.timer-body {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #f0e8de;
+}
+
+.timer-clock-col {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.timer-clock {
+  font-size: 2.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #1c0f07;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: color 0.3s;
+}
+
+.timer-clock.ticking {
+  color: #c17b3e;
+}
+
+.timer-clock.finished {
+  color: #5a8a3c;
+}
+
+.timer-total-label {
+  font-size: 0.75rem;
+  color: #b09070;
+  margin-top: 3px;
+}
+
+.timer-instruction-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.timer-instruction-main {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #1c0f07;
+  line-height: 1.3;
+}
+
+.timer-instruction-main.finished {
+  color: #5a8a3c;
+}
+
+.timer-instruction-sub {
+  font-size: 0.8125rem;
+  color: #a07850;
+  margin-top: 3px;
+}
+
+/* Stage list */
+.timer-stages {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 20px;
+}
+
+.timer-stage {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid #f5ede4;
+  transition: background 0.2s;
+}
+
+.timer-stage:last-child {
+  border-bottom: none;
+}
+
+.stage-indicator {
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #f0e8de;
+  color: #b09070;
+  transition: all 0.2s;
+}
+
+.timer-stage.done .stage-indicator {
+  background: #e8f0e0;
+  color: #5a8a3c;
+}
+
+.timer-stage.active .stage-indicator {
+  background: #c17b3e;
+  color: #fff;
+}
+
+.stage-time {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #8c6040;
+  flex-shrink: 0;
+  width: 38px;
+}
+
+.stage-desc {
+  font-size: 0.875rem;
+  color: #6c4a2a;
+  flex: 1;
+}
+
+.timer-stage.done .stage-desc {
+  color: #b0a090;
+  text-decoration: line-through;
+  text-decoration-color: #d0c0b0;
+}
+
+.timer-stage.active .stage-desc {
+  color: #1c0f07;
+  font-weight: 500;
+}
+
+.stage-tag {
+  color: #c17b3e;
+  font-weight: 600;
+}
+
+.timer-stage.done .stage-tag {
+  color: inherit;
+}
+
+/* Controls */
+.timer-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.timer-btn-primary {
+  flex: 1;
+  padding: 11px 16px;
+  background: #2c1808;
+  color: #f5ede3;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.timer-btn-primary:hover {
+  background: #3e2210;
+}
+
+.timer-btn-primary:active {
+  transform: scale(0.98);
+}
+
+.timer-btn-secondary {
+  padding: 11px 18px;
+  background: transparent;
+  color: #8c6040;
+  border: 1.5px solid #ddd0c0;
+  border-radius: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.timer-btn-secondary:hover:not(:disabled) {
+  border-color: #c17b3e;
+  color: #c17b3e;
+  background: rgba(193, 123, 62, 0.06);
+}
+
+.timer-btn-secondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── Mobile ─────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .app-header h1 {
+    font-size: 1.875rem;
+  }
+
+  .brew-result-card {
+    padding: 22px 18px;
+  }
+
+  .result-method-name {
+    font-size: 1.375rem;
+  }
+
+  .stat-value {
+    font-size: 0.9375rem;
+  }
+}
