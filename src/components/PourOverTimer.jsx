@@ -52,6 +52,90 @@ function formatSecs(secs) {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
+function CircularProgress({ progress, stages, totalSecs, elapsed, isFinished, running }) {
+  const cx = 100, cy = 100, r = 78;
+  const sw = 10;
+  const circumference = 2 * Math.PI * r;
+  const offset = circumference * (1 - progress);
+
+  const timeToAngle = (t) => (t / totalSecs) * 2 * Math.PI - Math.PI / 2;
+  const ringPoint = (angle) => ({
+    x: cx + r * Math.cos(angle),
+    y: cy + r * Math.sin(angle),
+  });
+
+  return (
+    <div className="circular-progress-wrapper">
+      <svg viewBox="0 0 200 200" className="circular-progress-svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="arc-grad" gradientUnits="userSpaceOnUse"
+            x1={cx} y1={cy - r} x2={cx} y2={cy + r}>
+            <stop offset="0%" stopColor="#c17b3e" />
+            <stop offset="100%" stopColor="#e09040" />
+          </linearGradient>
+        </defs>
+
+        {/* Track */}
+        <circle cx={cx} cy={cy} r={r}
+          fill="none" stroke="#f0e8de" strokeWidth={sw} />
+
+        {/* Progress arc */}
+        <circle cx={cx} cy={cy} r={r}
+          fill="none"
+          stroke={isFinished ? '#5a8a3c' : 'url(#arc-grad)'}
+          strokeWidth={sw}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          transform={`rotate(-90 ${cx} ${cy})`}
+          style={{ transition: 'stroke-dashoffset 1s linear' }}
+        />
+
+        {/* Stage markers */}
+        {stages.map((stage, i) => {
+          const angle = timeToAngle(stage.time);
+          const { x, y } = ringPoint(angle);
+          const nextTime = i + 1 < stages.length ? stages[i + 1].time : totalSecs;
+          const done = elapsed >= nextTime;
+          const active = !done && elapsed >= stage.time;
+          return (
+            <circle key={i} cx={x} cy={y} r={5}
+              fill={done ? '#e09040' : active ? '#c17b3e' : '#e8ddd2'}
+              stroke="#fff" strokeWidth={active ? 2 : 1.5}
+              className={active ? 'stage-dot-active' : ''}
+            />
+          );
+        })}
+
+        {/* End marker at 12 o'clock */}
+        <circle cx={cx} cy={cy - r} r={4}
+          fill={isFinished ? '#5a8a3c' : '#e8ddd2'}
+          stroke="#fff" strokeWidth="1.5"
+        />
+
+        {/* Clock in center */}
+        <text x={cx} y={cy - 5}
+          textAnchor="middle"
+          fontSize="30" fontWeight="700"
+          fontFamily="'Inter', system-ui, sans-serif"
+          fill={isFinished ? '#5a8a3c' : running ? '#c17b3e' : '#1c0f07'}
+          className="circular-clock-text"
+        >
+          {formatSecs(elapsed)}
+        </text>
+        <text x={cx} y={cy + 15}
+          textAnchor="middle"
+          fontSize="11"
+          fontFamily="'Inter', system-ui, sans-serif"
+          fill="#b09070"
+        >
+          / {formatSecs(totalSecs)}
+        </text>
+      </svg>
+    </div>
+  );
+}
+
 function StagesChart({ stages }) {
   const maxPour = Math.max(...stages.map(s => s.pour));
   const svgW = 300;
@@ -265,44 +349,22 @@ export default function PourOverTimer({ result }) {
 
       {tab === 'timer' ? (
         <>
-          <div className="timer-progress-bar">
-            <div className="timer-progress-fill" style={{ width: `${progress * 100}%` }} />
-            {stages.map((stage, i) => {
-              const pct = (stage.time / totalSecs) * 100;
-              const nextTime = i + 1 < stages.length ? stages[i + 1].time : totalSecs;
-              const done = elapsed >= nextTime;
-              const active = !done && elapsed >= stage.time;
-              return (
-                <div
-                  key={i}
-                  className={`progress-step ${done ? 'done' : ''} ${active ? 'active' : ''}`}
-                  style={{ left: `${pct}%` }}
-                >
-                  <div className="progress-step-dot" />
-                  <div className="progress-step-label">{i + 1}</div>
-                </div>
-              );
-            })}
-            <div className={`progress-step ${isFinished ? 'done' : ''}`} style={{ left: '100%' }}>
-              <div className="progress-step-dot end" />
-            </div>
-          </div>
+          <CircularProgress
+            progress={progress}
+            stages={stages}
+            totalSecs={totalSecs}
+            elapsed={elapsed}
+            isFinished={isFinished}
+            running={running}
+          />
 
-          <div className="timer-body">
-            <div className="timer-clock-col">
-              <div className={`timer-clock ${isFinished ? 'finished' : running ? 'ticking' : ''}`}>
-                {formatSecs(elapsed)}
-              </div>
-              <div className="timer-total-label">/ {formatSecs(totalSecs)}</div>
+          <div className="timer-instruction-block">
+            <div className={`timer-instruction-main ${isFinished ? 'finished' : ''}`}>
+              {instructionMain}
             </div>
-            <div className="timer-instruction-col">
-              <div className={`timer-instruction-main ${isFinished ? 'finished' : ''}`}>
-                {instructionMain}
-              </div>
-              {instructionSub && (
-                <div className="timer-instruction-sub">{instructionSub}</div>
-              )}
-            </div>
+            {instructionSub && (
+              <div className="timer-instruction-sub">{instructionSub}</div>
+            )}
           </div>
 
           <ol className="timer-stages">
