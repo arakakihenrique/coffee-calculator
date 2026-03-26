@@ -511,120 +511,35 @@ main {
   display: block;
 }
 
-/* Progress bar */
-.timer-progress-bar {
-  height: 6px;
-  background: #f0e8de;
-  border-radius: 99px;
-  margin-bottom: 28px;
-  position: relative;
-}
-
-.timer-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #c17b3e, #e09040);
-  border-radius: 99px;
-  transition: width 1s linear;
-}
-
-/* Step markers on the bar */
-.progress-step {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+/* Circular progress */
+.circular-progress-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
+  justify-content: center;
+  margin-bottom: 16px;
 }
 
-.progress-step-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #e8ddd2;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px #ddd0c0;
-  transition: background 0.3s, box-shadow 0.3s;
-  flex-shrink: 0;
+.circular-progress-svg {
+  width: 172px;
+  height: 172px;
+  display: block;
 }
 
-.progress-step-dot.end {
-  width: 10px;
-  height: 10px;
+.circular-clock-text {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  transition: fill 0.3s;
 }
 
-.progress-step.done .progress-step-dot {
-  background: #e09040;
-  box-shadow: 0 0 0 1px #c17b3e;
+.stage-dot-active {
+  filter: drop-shadow(0 0 4px rgba(193, 123, 62, 0.55));
 }
 
-.progress-step.active .progress-step-dot {
-  background: #c17b3e;
-  box-shadow: 0 0 0 3px rgba(193, 123, 62, 0.25);
-}
-
-.progress-step-label {
-  position: absolute;
-  top: 11px;
-  font-size: 0.625rem;
-  font-weight: 700;
-  color: #b09070;
-  line-height: 1;
-  white-space: nowrap;
-  transition: color 0.3s;
-}
-
-.progress-step.done .progress-step-label {
-  color: #c17b3e;
-}
-
-.progress-step.active .progress-step-label {
-  color: #1c0f07;
-}
-
-/* Clock + instruction row */
-.timer-body {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+/* Instruction block below the ring */
+.timer-instruction-block {
+  text-align: center;
   margin-bottom: 20px;
   padding-bottom: 18px;
   border-bottom: 1px solid #f0e8de;
-}
-
-.timer-clock-col {
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.timer-clock {
-  font-size: 2.75rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  color: #1c0f07;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  transition: color 0.3s;
-}
-
-.timer-clock.ticking {
-  color: #c17b3e;
-}
-
-.timer-clock.finished {
-  color: #5a8a3c;
-}
-
-.timer-total-label {
-  font-size: 0.75rem;
-  color: #b09070;
-  margin-top: 3px;
-}
-
-.timer-instruction-col {
-  flex: 1;
-  min-width: 0;
 }
 
 .timer-instruction-main {
